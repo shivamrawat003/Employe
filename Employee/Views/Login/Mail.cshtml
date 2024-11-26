@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+<form method="post" action="@Url.Action("SendEmail", "Mail")" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-sm-4 offset-sm-2">
+            <div class="card">
+                <div class="card-header" style="text-align:center">
+                    Send a Mail
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>
+                                To
+                            </label>
+                            <input type="email" id="ToEmail" name="ToEmail" class="form-control" value="" required />
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <label>
+                                From
+                            </label>
+                            <input type="email" id="FromEmail" name="FromEmail" class="form-control" value="" required />
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <label>
+                                Subject
+                            </label>
+                            <input type="text" id="Subject" name="Subject" class="form-control" value="" required />
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <label>
+                                Body
+                            </label>
+                            <textarea type="text" id="Body" name="Body" rows="3" class="form-control" value="" required></textarea>
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <label>Attachment</label>
+                            <input type="file" id="Attachment" name="Attachment" class="form-control" accept=".png, .jpg, .jpeg, .doc, .pdf" />
+                        </div>
+                        <div class="col-sm-12 mt-2">
+
+                            <button type="submit" class="btn btn-primary form-control">Send</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

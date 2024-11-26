@@ -1,0 +1,33 @@
+﻿@{
+    System.Data.DataSet ds = Employee.Models.Procs.EmpSearch(ViewBag.Rows, ViewBag.Offset, ViewBag.Sv);
+    System.Data.DataTable Emps = ds.Tables[0];
+    System.Data.DataTable Total = ds.Tables[1];
+}
+
+
+@for (int i = 0; i < Emps.Rows.Count; i++)
+{
+<tr>
+    <td>@Emps.Rows[i]["RowNumber"].ToString()</td>
+    <td>@Emps.Rows[i]["First_Name"].ToString()</td>
+    <td>@Emps.Rows[i]["Last_Name"].ToString()</td>
+    <td>@Emps.Rows[i]["Email"].ToString()</td>
+    <td>@Emps.Rows[i]["Contact_Num"].ToString()</td>
+    <td>@Emps.Rows[i]["Salary"].ToString()</td>
+    <td>@Emps.Rows[i]["Department"].ToString()</td>
+    <td>@Emps.Rows[i]["Address"].ToString()</td>
+    <td>@Emps.Rows[i]["State"].ToString()</td>
+    <td>@Emps.Rows[i]["Country"].ToString()</td>
+    <td>@Emps.Rows[i]["Password"].ToString()</td>
+    <td>
+        <a href="@Url.Action("Details", "Home", new { id = Emps.Rows[i]["Id"].ToString() })">View</a>
+        <a href="@Url.Action("Update", "Home", new { id = Emps.Rows[i]["Id"].ToString() })">Edit</a>
+        <a href="@Url.Action("Delete", "Home",new { id =Emps.Rows[i]["Id"].ToString()})">Delete</a>
+    </td>
+</tr>
+}
+
+<script>
+    $('.TotRec').html('@Total.Rows[0]["Total"].ToString()');
+    CalTotPages();
+</script>

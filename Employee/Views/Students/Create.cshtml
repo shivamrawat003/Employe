@@ -1,0 +1,100 @@
+﻿@model Employee.Models.Student
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.Course, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Course, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Fees, htmlAttributes: new { @class = "" })
+                @Html.EditorFor(model => model.Fees, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Fees, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mt-4 mb-2">
+            <div class="col-sm-4">
+                <span>Subjects</span>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-outline-info form-control" onclick="AddMore()">Add More</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2 table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Subject Name</th>
+                            <th>Semester</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="SubjTBody">
+                        <tr class="tr_0">
+                            <td><input type="text" id="Subject_0" name="Subject" class="form-control" placeholder="Enter Subject" required /></td>
+                            <td><input type="text" id="Semester_0" name="Semester" class="form-control" placeholder="Enter Semester" max="8" required /></td>
+                            <td><i class="fa fa-trash text-danger" style="font-size:20px; cursor:pointer;" onclick="DeleteRow('tr_0')"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-sm-4">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<script>
+    var num = 1;
+    function AddMore() {
+        var tr = `<tr class="tr_` + num + `">
+                                        <td><input type="text" id="Subject_`+ num + `" name="Subject" class="form-control" placeholder="Enter Subject" required /></td>
+                                        <td><input type="text" id="Semester_`+ num + `" name="Semester" class="form-control" placeholder="Enter Semester" max="8" required /></td>
+                                        <td><i class="fa fa-trash text-danger" style="font-size:20px; cursor:pointer;" onclick="DeleteRow('tr_`+ num + `')"></i></td>
+                                    </tr>`;
+        $('.SubjTBody').append(tr);
+        num++;
+    };
+    function DeleteRow(cl) {
+        $('.' + cl).remove();
+    }
+</script>

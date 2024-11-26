@@ -1,0 +1,89 @@
+﻿@model Employee.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Employee.Models.Contxt db = new Employee.Models.Contxt();
+    int? Id = Model.Id;
+    List<Employee.Models.Subject> subjects = db.Subjects.Where(b => b.StudentId == Id).ToList();
+    db.Dispose();
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Course)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fees)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fees)
+        </dd>
+        <dt>
+            Subject Name
+        </dt>
+        <dd>
+
+            @if (subjects.Any())
+            {
+                <ul>
+                    @foreach (var subject in subjects)
+                    {
+                        <li>
+                            @Html.DisplayFor(modelitem => subject.Sub_Name)
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No subjects associated with this student.</p>
+            }
+        </dd>
+        <dt>
+            Semester
+        </dt>
+        <dd>
+
+            @if (subjects.Any())
+            {
+                <ul>
+                    @foreach (var subject in subjects)
+                    {
+                        <li>
+                            @Html.DisplayFor(modelitem => subject.Sem)
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No semester associated with this student.</p>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

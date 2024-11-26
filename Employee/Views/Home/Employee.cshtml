@@ -1,0 +1,383 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //System.Data.DataTable dt = Practice.Models.AllProcs.GetEmployees();
+    int? Id = ViewBag.Id;
+    System.Data.DataTable dt = Employee.Models.Procs.GetEmployees();
+    System.Data.DataTable Country = Employee.Models.Procs.Country_Select();
+    System.Data.DataTable Dept = Employee.Models.Procs.Dept_Select();
+    int sno = 0; 
+    System.Data.DataSet ds = Employee.Models.Procs.EmpSearch(10, 0);
+    System.Data.DataTable Emps = ds.Tables[0];
+    System.Data.DataTable Total = ds.Tables[1];
+}
+
+<h2 class="text-center" style="padding-top: 0px; text-shadow:2px 2px #c6c7c8;font-weight:bold">Employee Form</h2>
+<a href="@Url.Action("Logout","Login")" class="btn btn-danger text-end">Logout</a>
+<h5 class="card-title " style="text-align:center"><i class="fa fa-user"></i> Hey @Employee.Models.MyCookies.UserDetails.Name!</h5>
+<form method="post" action="/Home/SaveMulti">
+    <div class="row-mt-1">
+        <div class="col-sm-8 offset-sm-2">
+            <div class="card" style="border:1px solid black">
+                <div class="card-header fw-bold text-center">
+                    Create a new user
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>First Name </label>
+                                <i class="fa fa-user"></i>
+                                <input type="text" id="FName" name="FName" value="" class="form-control" placeholder="Enter your first name" />
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Last Name <i class="fa fa-user"> </i></label>
+                                <input type="text" id="LName" name="LName" value="" class="form-control" placeholder="Enter your last name" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email <i class="fa fa-envelope"></i></label>
+                                <input type="email" id="Email" name="Email" value="" class="form-control" placeholder="Enter your email" />
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Contact Number <i class="fa fa-phone"></i></label>
+                                <input type="text" id="ContactNum" name="ContactNum" value="" class="form-control" placeholder="Enter your contact number" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Salary <i class="fa fa-money"></i></label>
+                                <input type="number" id="Salary" name="Salary" value="" class="form-control" placeholder="Enter your salary" />
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <label>Departments <i class="fa fa-building"></i></label>
+                                <select name="Department" id="Department" class="form-select">
+                                    <option value="">Select</option>
+                                    @for (int j = 0; j < Dept.Rows.Count; j++)
+                                    {
+                                        <option value="@Dept.Rows[j]["Id"].ToString()">@Dept.Rows[j]["Dept_Name"].ToString()</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address <i class="fa fa-address-card"></i></label>
+                                <textarea type="text" id="Address" name="Address" value="" class="form-control" placeholder="Enter your address here"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <label>Country <i class="fa fa-globe"></i></label>
+                                @*<select name="Country" id="Country" class="form-select">
+                    <option value="">Select</option>
+                    @for (int j = 0; j < Country.Rows.Count; j++)
+                    {
+                        <option value="@Country.Rows[j]["Id"].ToString()">@Country.Rows[j]["Country_Name"].ToString()</option>
+                    }
+                </select>*@
+                                <select id="Country" name="Country" class="form-select" onchange="GetState()">
+                                    @*//ye data ko dynamically dikhane ke liye hai state form mai jo sql se aa rha h and getstate function chalega jab according to country data select hoga state mai*@
+                                    @if (Country.Rows.Count > 0)
+                                    {
+                                        <option value="">Select</option>
+                                        for (int j = 0; j < Country.Rows.Count; j++)
+                                        {
+                                            <option value="@Country.Rows[j]["Id"].ToString()">@Country.Rows[j]["Country_Name"].ToString()</option>
+ }
+                                    }
+                                    else
+                                    {
+                                        <option value="">No data found!</option>
+}
+                                </select>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Password <i class="fa fa-lock"></i></label>
+                                <input type="password" id="Password" name="Password" class="form-control" value="" placeholder="Enter your password" />
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <label>State</label>
+                                <select id="StateId" name="StateId" class="form-select">
+                                    <option value="">Select Country</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4" style="align-items:center">
+                            <button type="submit" class="btn btn-primary form-control" value="" id="Save" name="Save">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<h2 style="color:black;padding-top:15px; padding-bottom:10px;text-align:center;text-shadow:2px 2px #c6c7c8;font-weight:bold ">Existing Employees</h2>
+<div class="row mb-4">
+    <div class="col-sm-2">
+        <input type="text" id="SearchInp" name="SearchInp" class="form-control" onkeyup="Typing()" />
+        <div class="searchBox">
+
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <button type="button" class="btn btn-primary form-control" onclick="SearchData(0)">Search</button>
+    </div>
+    
+    
+    <div class="col-sm-1">
+        <button type="button" class="btn btn-dark form-control" onclick="ClearData()">Clear</button>
+    </div>
+
+    <div class="col-sm-1 offset-sm-5">
+        <select id="ShowRows" name="ShowRows" class="form-select" onchange="SearchData(0)">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <span>Total Rec - <span class="TotRec">@Total.Rows[0]["Total"].ToString()</span></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group table-responsive">
+            <table class="table table-sm table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Sno.</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
+                        <th>Salary</th>
+                        <th>Department</th>
+
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody class="myTBody">
+                    @for (int i = 0; i < Emps.Rows.Count; i++, sno++)
+                    {
+                    <tr>
+                        <td>@sno</td>
+                        <td>@Emps.Rows[i]["First_Name"].ToString()</td>
+                        <td>@Emps.Rows[i]["Last_Name"].ToString()</td>
+                        <td>@Emps.Rows[i]["Email"].ToString()</td>
+                        <td>@Emps.Rows[i]["Contact_Num"].ToString()</td>
+                        <td>@Emps.Rows[i]["Salary"].ToString()</td>
+                        <td>@Emps.Rows[i]["Department"].ToString()</td>
+                        <td>@Emps.Rows[i]["Address"].ToString()</td>
+                        <td>@Emps.Rows[i]["State"].ToString()</td>
+                        <td>@Emps.Rows[i]["Country"].ToString()</td>
+                        <td>@Emps.Rows[i]["Password"].ToString()</td>
+
+
+                        <td>
+                            <a href="@Url.Action("Details","Home", new { id = Emps.Rows[i]["Id"].ToString() })">View</a>
+                            <a href="@Url.Action("Edit","Home", new { id = Emps.Rows[i]["Id"].ToString() })">Edit</a>
+                            <a href="@Url.Action("Delete","Home", new { id = Emps.Rows[i]["Id"].ToString() })">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2 offset-sm-10">
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-primary" onclick="JumpPage(0)"><i class="fa fa-arrow-left"></i></button>
+            <button type="button" disabled class="btn btn-outline-primary"><span class="CurrPage">1</span>/<span class="totPage">0</span></button>
+            <button type="button" class="btn btn-outline-primary" onclick="JumpPage(1)"><i class="fa fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+<script>
+    var typingTimer = 0; //timer identifier
+    var doneTypingInterval = 2000;  //time in ms (1 second)
+
+    //on keyup, start the countdown
+    function Typing() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(AutoSuggest(), doneTypingInterval);
+    };
+    function AutoSuggest() {
+        var d = $('#SearchInp').val().trim();
+        if (d == '') {
+            $('.searchBox').hide();
+        }
+        else {
+            $.get('/Home/AutoSuggest', { data: d }, function (data) {
+                var div = '';
+                var dt = JSON.parse(data);
+                if (dt.length > 0) {
+                    for (var i = 0; i < dt.length; i++) {
+                        div += `<div class="searchOpt" onclick="ClickSearch('` + dt[i].First_name + `')">` + dt[i].First_name + `</div>`;
+                    }
+                }
+            
+                else {
+                    div = '<p class="text-center">No data found!</p>'
+                }
+                
+                $('.searchBox').html(div).show();
+            });
+
+        }
+    };
+    function ClickSearch(dt) {
+        $('#SearchInp').val(dt);
+        SearchData(0);
+        $('.searchBox').hide();
+    }
+    function GetState() {
+        
+        var cid = $('#Country').val();
+        if (cid != '') {
+            $.get('/Home/GetState', { Id: cid }, function (data) {
+                var dt = JSON.parse(data);
+                var opt = '';
+                if (dt.length > 0) {
+                    for (var i = 0; i < dt.length; i++) {
+                        opt += '<option value="' + dt[i].Id + '">' + dt[i].State_Name + "</option>";
+                    }
+                }
+                else {
+                    opt = '<option value="">No state found!</option>';
+                }
+                $('#StateId').html(opt);//for showing the html data
+            }).fail(function (data) {
+                alert('Code Error');
+            });
+        }
+        else {
+            $('#StateId').html('<option value="">Select Country</option>');
+        }
+    }
+
+
+
+    function CalTotPages() {
+        var TotalData = $('.TotRec').html();
+        var ShowRows = $('#ShowRows').val();
+        var TotPage = parseInt(TotalData) / parseInt(ShowRows);
+        if (parseInt(TotalData) % parseInt(ShowRows) == 0)
+            $('.totPage').html(parseInt(TotPage));
+        else
+            $('.totPage').html(parseInt(TotPage) + 1);
+    };
+
+    function JumpPage(way) {
+        var ShowRows = $('#ShowRows').val();
+        var CurrPage = $('.CurrPage').html(); //3
+        var Offset = 0;
+        if (way == 0 && CurrPage != '1') { //Previous
+            Offset = (parseInt(CurrPage) - 2) * parseInt(ShowRows);
+            SearchData(Offset);
+            $('.CurrPage').html(parseInt(CurrPage) - 1);
+        }
+        else if (way == 1 && CurrPage != $('.totPage').html()) { //Next
+            Offset = parseInt(CurrPage) * parseInt(ShowRows);
+            SearchData(Offset);
+            $('.CurrPage').html(parseInt(CurrPage) + 1);
+        }
+    }
+
+    function SearchData(Offset) {
+        var sec = $('#SearchInp').val();
+        $.get('/Home/EmpSearch', { Rows: $('#ShowRows').val(), Offset: Offset, SearchVal: sec }, function (data) {
+            $('.myTBody').html(data);
+        });
+        if (Offset == 0) {
+            $('.CurrPage').html('1');
+        }
+    };
+
+    function ClearData() {
+        $('#SearchInp').val('');
+        SearchData(0);
+    };
+
+    //let timer;
+    //const input = document.querySelector('#SearchInp');
+    //input.addEventListener('keyup', function (e) {
+    //    clearTimeout(timer);
+    //    timer = setTimeout(() => {
+    //        SearchData();
+    //    }, 1000);
+    //});
+
+    CalTotPages();
+</script>
+<style>
+    .searchBox {
+        background-color: white;
+        width: 12.5rem;
+        position: absolute;
+        border: 1px solid grey;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px 2px grey;
+        display: none;
+        cursor: pointer;
+    }
+    .searchOpt:hover {
+        
+        background: blue;
+        color: white;
+    }
+</style>

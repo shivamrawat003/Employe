@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+    var Email = TempData["Uid"];
+    var Pwd = TempData["Pwd"];
+    var Msg = TempData["Msg"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    @if (Employee.Models.MyCookies.AuthUser)
+    {
+        <script>
+            location.href = '/Home/Employee';
+        </script>
+    }
+    <form method="post" action="/Login/LoginUser">
+        <div class="row">
+            <div class="col-sm-4 offset-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        Login
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>
+                                    Username/Email
+                                </label>
+                                <input type="email" id="Email" name="Email" class="form-control" value="@Email" required />
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <label>
+                                    Password
+                                </label>
+                                <input type="password" id="Pass" name="Pass" class="form-control" value="@Pwd" required />
+                            </div>
+                            <div class="col-sm-12 mt-2">
+
+                                <button type="submit" class="btn btn-primary form-control">Login</button>
+                            </div>
+                            <p class="text-bg-danger">@Msg</p>
+                            <a href="@Url.Action("Mail")">Send a mail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "StudentList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Data.DataTable dt = Employee.Models.Procs.StudentsList();
+}
+
+<h2>Student List</h2>
+
+<form method="post" action="/Student/DeleteConfirm">
+    <div class="row">
+        <div class="col-sm-12 table-responsive">
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Fees</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        <tr>
+                            <td>1</td>
+                            <td>@dt.Rows[i]["Name"].ToString()</td>
+                            <td>@dt.Rows[i]["Course"].ToString()</td>
+                            <td>@dt.Rows[i]["Fees"].ToString()</td>
+                            <td>
+                                <a href="/Student/Edit?id=@dt.Rows[i]["Id"].ToString()">Edit</a>
+                                <a href="/Student/DeleteConfirm?id=@dt.Rows[i]["Id"].ToString()" onclick="return confirm('Are you sure you want to delete the user with Id: @dt.Rows[i]["Id"].ToString()?');">Delete</a>
+                                
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function DeleteUser() {
+    };
+</script>
+

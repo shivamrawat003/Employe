@@ -1,0 +1,78 @@
+﻿`   
+@{
+    ViewBag.Title = "Student";
+}
+
+<form method="post" action="/Student/Save">
+    <div class="row">
+        <div class="col-sm-4 offset-sm-4">
+            <div class="card">
+                <div class="card-header" style="text-align:center; font-weight:bolder; font-size:larger">
+                    Student Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Student Name</label>
+                            <input type="text" id="Name" name="Name" value="" class="form-control" required />
+                        </div>
+                        <div class="col-sm-12">
+                            <label>Course Name</label>
+                            <input type="text" id="Course" name="Course" value="" class="form-control" required />
+                        </div>
+                        <div class="col-sm-12">
+                            <label>Fees</label>
+                            <input type="number" id="Fees" name="Fees" value="" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="row mt-4 mb-2">
+                        <div class="col-sm-4">
+                            <span>Subjects</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-outline-info form-control" onclick="AddMore()">Add More</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mt-2 table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Name</th>
+                                        <th>Semester</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="SubjTBody">
+                                    <tr class="tr_0">
+                                        <td><input type="text" id="Subject_0" name="Subject" class="form-control" placeholder="Enter Subject" required /></td>
+                                        <td><input type="text" id="Semester_0" name="Semester" class="form-control" placeholder="Enter Semester" max="8" required /></td>
+                                        <td><i class="fa fa-trash text-danger" style="font-size:20px; cursor:pointer;" onclick="DeleteRow('tr_0')"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary form-control">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<h3 style="text-align:center;"><a href="@Url.Action("StudentList","Student")">View student list</a></h3>
+
+<script>
+    var num = 1;
+    function AddMore() {
+        var tr = `<tr class="tr_`+ num +`">
+                                        <td><input type="text" id="Subject_`+ num +`" name="Subject" class="form-control" placeholder="Enter Subject" required /></td>
+                                        <td><input type="text" id="Semester_`+ num +`" name="Semester" class="form-control" placeholder="Enter Semester" max="8" required /></td>
+                                        <td><i class="fa fa-trash text-danger" style="font-size:20px; cursor:pointer;" onclick="DeleteRow('tr_`+ num +`')"></i></td>
+                                    </tr>`;
+        $('.SubjTBody').append(tr);
+        num++;
+    };
+    function DeleteRow(cl) {
+        $('.' + cl).remove();
+    }
+</script>

@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int? Id = ViewBag.Id;
+    System.Data.DataTable dt = Employee.Models.Procs.GetEmployeeDetails(Id);
+
+}
+<h2 style="text-align: center; text-shadow: 2px 2px #c6c7c8; font-weight: bold">
+    Are you sure you want to delete the user?
+</h2>
+
+<div class="container" style="">
+
+    @*<input type="hidden" id="Id" name="Id" value="@Id" />*@
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                First Name:
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["First_Name"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Last Name:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Last_Name"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Email Id:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Email"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Contact Number:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Contact_Num"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Salary:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Salary"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Department:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Department"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Address:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Address"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                State:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["State"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Country:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Country"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                Password:
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                @dt.Rows[0]["Password"].ToString()
+                @*<input type="text" id="" name="" placeholder="" class="form-control" value="@dt.Rows[0]["Name"].ToString()" />*@
+            </div>
+        </div>
+    </div>
+    <form method="post" action="/Home/DeleteConfirm">
+        <input type="hidden" id="Id" name="Id" value="@Id" />
+        <div class="row">
+            <div class="col-sm-4">
+                <button id="delete" class="btn btn-primary btn-danger">Delete</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+

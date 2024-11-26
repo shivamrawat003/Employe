@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int? Id = ViewBag.Id;
+    System.Data.DataTable dt = Employee.Models.Procs.GetEmployeeDetail(Id);
+    System.Data.DataTable Country = Employee.Models.Procs.Country_Select();
+    System.Data.DataTable Dept = Employee.Models.Procs.Dept_Select();
+}
+
+<h2 style="text-align: center; padding-bottom:10px; text-shadow: 2px 2px #c6c7c8; font-weight: bold">Edit your details</h2>
+<form method="post" action="/Home/Update">
+
+    <div class="row-mt-2">
+        <div class="col-sm-8 offset-sm-2">
+            <div class="card">
+                <div class="card-header fw-bold text-center">
+                    Employee Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="FName" id="FName" class="form-control" value="@dt.Rows[0]["First_Name"].ToString()" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="LName" id="LName" class="form-control" value="@dt.Rows[0]["Last_Name"].ToString()" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <input type="hidden" value="@Id" name="Id" id="Id" />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="Email" id="Email" value="@dt.Rows[0]["Email"].ToString()" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Contact Number</label>
+                                <input type="text" name="Phonenum" id="Phonenum" class="form-control" value="@dt.Rows[0]["Contact_Num"].ToString() " />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Salary</label>
+                                <input type="number" name="Salary" id="Salary" class="form-control" value="@dt.Rows[0]["Salary"].ToString()" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Departments</label>
+                                <select name="Department" id="Department" class="form-select">
+                                    <option value="">Select</option>
+                                    @for (int j = 0; j < Dept.Rows.Count; j++)
+                                    {
+                                        <option value="@Dept.Rows[j]["Id"].ToString()">@Dept.Rows[j]["Dept_Name"].ToString()</option>
+                                    }
+                                </select>
+                            </div>
+                            <script>$('#Department').val('@dt.Rows[0]["Department"].ToString()')</script>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea type="text" id="Address" name="Address" rows="3" class="form-control">@dt.Rows[0]["Address"].ToString()</textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                <label>State <i class="fa fa-location-arrow"></i></label>
+                                <select name="State" id="State" class="form-select">
+                                    <option value="">Select</option>
+                                    @for (int j = 0; j < State.Rows.Count; j++)
+                                    {
+                                        <option value="@State.Rows[j]["Id"].ToString()">@State.Rows[j]["State_Name"].ToString()</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <script>$('#State').val('@dt.Rows[0]["State"].ToString()')</script>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <select name="Country" id="Country" class="form-select">
+                                @for (int j = 0; j < Country.Rows.Count; j++)
+                                {
+                                    <option value="@Country.Rows[j]["Id"].ToString()">@Country.Rows[j]["Country_Name"].ToString()</option>
+                                }
+                            </select>
+
+                        </div>
+                        <script>$('#Country').val('@dt.Rows[0]["Country"].ToString()')</script>
+
+                    </div>
+                    <br />
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" name="Password" id="Password" class="form-control" value="@dt.Rows[0]["Password"].ToString()" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary form-control">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
